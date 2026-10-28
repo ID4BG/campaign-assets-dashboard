@@ -332,6 +332,9 @@ function readRow(row) {
 }
 
 async function uploadFile(file, campaign, onPct) {
+  // check setup first so we can show a clear reason instead of a generic Blob error
+  const check = await api('/api/upload').catch(() => null);
+  if (check && !check.ok) throw new Error(check.error);
   const { upload } = await import('/vendor/blob-upload.js');
   const safe = (s) => String(s).toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '') || 'file';
   const blob = await upload(`campaigns/${safe(campaign)}/${safe(file.name)}`, file, {
