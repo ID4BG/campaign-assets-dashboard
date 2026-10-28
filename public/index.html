@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Campaigns · Digitain Sportsbook</title>
+  <link rel="icon" href="/assets/logo.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="wrap top">
+    <div class="brand"><a href="/" id="homeLink" title="Back to all campaigns"><img class="logo" src="/assets/logo.svg" alt="Digitain Sportsbook" /></a><span class="badge hidden" id="adminBadge">Admin</span></div>
+    <div class="actions">
+      <button class="btn primary hidden" id="newCampaignBtn">+ New campaign</button>
+      <button class="btn" id="exportBtn">Export CSV</button>
+      <button class="btn hidden" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Campaigns</h1>
+    <div class="filters">
+      <input id="q" type="search" placeholder="Campaign title…" />
+      <label>From <input id="from" type="date" /></label>
+      <label>To <input id="to" type="date" /></label>
+      <select id="fChannel"><option value="">All channels</option></select>
+      <button class="link-btn" id="clearBtn">Clear</button>
+    </div>
+    <div id="notice" class="notice hidden"></div>
+    <div id="list"></div>
+    <p class="empty hidden" id="empty"></p>
+  </main>
+
+  <footer class="wrap foot"><button class="link-btn quiet" id="loginBtn">Admin login</button></footer>
+
+  <dialog id="loginDlg">
+    <form id="loginForm" class="dlg">
+      <h2>Admin login</h2>
+      <label>Username<input name="username" required autocomplete="username" /></label>
+      <label>Password<input type="password" name="password" required autocomplete="current-password" /></label>
+      <p class="err" id="loginErr"></p>
+      <div class="dlg-actions">
+        <button type="button" class="btn" id="loginCancel">Cancel</button>
+        <button class="btn primary" type="submit">Log in</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Campaign window (admin) -->
+  <dialog id="campDlg" class="camp-dlg">
+    <form id="campForm" class="dlg" novalidate>
+      <div class="camp-top">
+        <label class="camp-name">Campaign *<input id="campName" required maxlength="120" placeholder="e.g. World Cup 2026" list="campaignList" /></label>
+        <button type="button" class="btn" id="campClose">Close</button>
+      </div>
+      <p class="sub">Each row is one item with its own type, link or file, and channels. Add as many as you need.</p>
+      <div id="rows"></div>
+      <button type="button" class="btn add-row" id="addRowBtn">+ Add another item</button>
+      <div class="dlg-actions sticky">
+        <span class="sub" id="campProgress"></span>
+        <span class="err" id="campErr"></span>
+        <button type="button" class="btn" id="campCancel">Cancel</button>
+        <button class="btn primary" type="submit" id="campSave">Save campaign</button>
+      </div>
+      <datalist id="campaignList"></datalist>
+    </form>
+  </dialog>
+
+  <!-- Confirm / rename dialog (replaces browser pop-ups) -->
+  <dialog id="askDlg">
+    <form id="askForm" class="dlg">
+      <h2 id="askTitle"></h2>
+      <p class="ask-msg" id="askMsg"></p>
+      <input id="askInput" class="hidden" maxlength="120" />
+      <div class="dlg-actions">
+        <button type="button" class="btn" id="askCancel">Cancel</button>
+        <button class="btn primary" type="submit" id="askOk">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
